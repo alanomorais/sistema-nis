@@ -1,0 +1,43 @@
+version: "3.9"
+
+services:
+  nginx:
+    container_name: nis-nginx
+    image: nginx:1.17.8
+    ports:
+        - 9000:80
+    volumes:
+      - .:/var/www/html
+      - ./.docker/nginx/site.conf:/etc/nginx/conf.d/site.conf
+      - ./.docker/nginx/logs:/var/log/nginx      
+      
+    links:
+      - php
+
+  php:
+    build: .
+    container_name: nis-php
+    volumes:
+      - .:/var/www/html
+      - ./.docker/php/php-fpm.conf:/usr/local/etc/php-fpm.conf      
+      - ./.docker/php/logs:/usr/local/var/log      
+  
+  mysql8:
+      container_name: nis-mysql
+      image: mysql:8.0
+      environment:
+        - MYSQL_ROOT_PASSWORD=root
+        - MYSQL_DATABASE=db_nis
+      ports:
+        - "3309:3306"
+
+  adminer:
+      container_name: nis-adminer
+      image: adminer
+      restart: always
+      environment:
+        - ADMINER_DEFAULT_SERVER=mysql8
+        - ADMINER_DESIGN=nette
+        - ADMINER_PLUGINS=tables-filter tinymce
+      ports:
+        - 8091:8080

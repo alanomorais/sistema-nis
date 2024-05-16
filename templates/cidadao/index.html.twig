@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cadastro de Cidadão{% endblock %}
+
+{% block body %}
+
+{% for message in app.flashes('success') %}
+    <div class="bg-blue-100 border-t border-b border-blue-500 text-blue-700 px-4 py-3" role="alert">
+        <p class="text-sm">{{ message }}</p>
+    </div>
+{% endfor %}
+
+<h1 class="text-xl">Listagem - Cidadão</h1>
+
+{# Formulário de pesquisa por NIS #}
+<form action="{{ path('app_cidadao_seach') }}" method="POST" class="mb-4">
+    <div class="flex">
+        <input type="text" name="nis" placeholder="Digite o NIS" class="form-input w-1/2 mr-2">
+        <button type="submit" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+            Pesquisar
+        </button>
+    </div>
+</form>
+
+{% if cidadaos is not empty %}
+    <table class="table-fixed min-w-full divide-y divide-gray-200">
+        <thead class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+            <tr>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>Código NIS</th>
+                <th>Data de Cadastro</th>
+                <th>Última Atualização</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cidadao in cidadaos %}
+                <tr class="bg-white divide-y divide-gray-200">
+                    <td>{{ cidadao.id }}</td>
+                    <td>{{ cidadao.nome }}</td>
+                    <td>{{ cidadao.codigoNis }}</td>
+                    <td>{{ cidadao.createdAt ? cidadao.createdAt|date('d/m/Y H:i:s') : '' }}</td>
+                    <td>{{ cidadao.updatedAt ? cidadao.updatedAt|date('d/m/Y H:i:s') : '' }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>Nenhum registro foi encontrado.</p>
+{% endif %}
+
+<a href="{{ path('app_cidadao_new') }}" class="inline-block bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded float-left">
+    Novo
+</a>
+
+{% endblock %}

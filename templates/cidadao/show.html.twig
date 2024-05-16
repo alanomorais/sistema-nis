@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Consulta Cidadao{% endblock %}
+
+{% block body %}
+    <h1 class="text-xl">Consulta Cidadao</h1>
+
+    <table class="table-fixed min-w-full divide-y divide-gray-200">
+        <tbody class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+            <tr>
+                <th>Id</th>
+                <td>{{ cidadao.id }}</td>
+            </tr>
+            <tr>
+                <th>Nome:</th>
+                <td>{{ cidadao.nome }}</td>
+            </tr>
+            <tr>
+                <th>Código Nis:</th>
+                <td>{{ cidadao.codigoNis }}</td>
+            </tr>
+            <tr>
+                <th>Criado em:</th>
+                <td>{{ cidadao.createdAt ? cidadao.createdAt|date('d/m/Y H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_cidadao_index') }}" class="inline-block bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded float-left">Voltar</a>
+{% endblock %}

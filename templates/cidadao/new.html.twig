@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Cidadao{% endblock %}
+
+{% block body %}
+    <h1 class="text-xl">Novo Cidadao</h1>
+
+    <div>
+        {{ include('cidadao/_form.html.twig') }}
+    </div>
+
+    <div class="flex-none h-8"></div>
+    
+{% endblock %}
